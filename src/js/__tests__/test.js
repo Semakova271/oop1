@@ -1,97 +1,93 @@
 import Character from '../character.js';
 import Bowman from '../bowman.js';
-import Daemon from '../daemon.js';
-import Magician from '../magician.js';
 import Swordsman from '../swordsman.js';
+import Magician from '../magician.js';
 import Undead from '../undead.js';
 import Zombie from '../zombie.js';
+import Daemon from '../daemon.js';
 
-test('Invalid name -> too short', () => {
-    expect(
-        () => new Character('O', 'Bowman', 100, 100),
-    ).toThrow('Invalid name length');
-});
-
-test('Invalid name -> too long', () => {
-    expect(
-        () => new Character('LooooooongName', 'Daemon', 100, 100),
-    ).toThrow('Invalid name length');
-});
-
-test('Invalid character type', () => {
-    expect(
-        () => new Character('Bowy', 'FakeBowman', 100, 100),
-    ).toThrow('Invalid character type');
-});
-
-test('Bowman', () => {
-    const bowman = new Bowman('Bowy');
-    expect(bowman).toEqual({
-        name: 'Bowy',
-        type: 'Bowman',
-        health: 100,
-        level: 1,
-        attack: 25,
-        defence: 25,
+describe('Character and subclasses tests', () => {
+  describe('Character class', () => {
+    test('should create a character with valid name and type', () => {
+      const character = new Character('John', 'Bowman');
+      expect(character.name).toBe('John');
+      expect(character.type).toBe('Bowman');
+      expect(character.health).toBe(100);
+      expect(character.level).toBe(1);
     });
-});
 
-test('Daemon', () => {
-    const daemon = new Daemon('Daemy');
-    expect(daemon).toEqual({
-        name: 'Daemy',
-        type: 'Daemon',
-        health: 100,
-        level: 1,
-        attack: 10,
-        defence: 40,
+    test('should throw error for invalid name - too short', () => {
+      expect(() => new Character('J', 'Bowman')).toThrow('Invalid name. Name must be a string of 2 to 10 characters.');
     });
-});
 
-test('Magician', () => {
-    const magician = new Magician('Magy');
-    expect(magician).toEqual({
-        name: 'Magy',
-        type: 'Magician',
-        health: 100,
-        level: 1,
-        attack: 10,
-        defence: 40,
+    test('should throw error for invalid name - too long', () => {
+      expect(() => new Character('JonathanTheGreat', 'Bowman')).toThrow('Invalid name. Name must be a string of 2 to 10 characters.');
     });
-});
 
-test('Swordsman', () => {
-    const swordsman = new Swordsman('Swordy');
-    expect(swordsman).toEqual({
-        name: 'Swordy',
-        type: 'Swordsman',
-        health: 100,
-        level: 1,
-        attack: 40,
-        defence: 10,
+    test('should throw error for invalid type', () => {
+      expect(() => new Character('John', 'InvalidType')).toThrow('Invalid type. Type must be one of: Bowman, Swordsman, Magician, Daemon, Undead, Zombie');
     });
-});
+  });
 
-test('Undead', () => {
-    const undead = new Undead('Undy');
-    expect(undead).toEqual({
-        name: 'Undy',
-        type: 'Undead',
-        health: 100,
-        level: 1,
-        attack: 25,
-        defence: 25,
+  describe('Subclasses', () => {
+    test('Bowman should have correct properties', () => {
+      const bowman = new Bowman('Robin');
+      expect(bowman.name).toBe('Robin');
+      expect(bowman.type).toBe('Bowman');
+      expect(bowman.attack).toBe(25);
+      expect(bowman.defence).toBe(25);
+      expect(bowman.health).toBe(100);
+      expect(bowman.level).toBe(1);
     });
-});
 
-test('Zombie', () => {
-    const zombie = new Zombie('Zomy');
-    expect(zombie).toEqual({
-        name: 'Zomy',
-        type: 'Zombie',
-        health: 100,
-        level: 1,
-        attack: 40,
-        defence: 10,
+    test('Swordsman should have correct properties', () => {
+      const swordsman = new Swordsman('Arthur');
+      expect(swordsman.name).toBe('Arthur');
+      expect(swordsman.type).toBe('Swordsman');
+      expect(swordsman.attack).toBe(40);
+      expect(swordsman.defence).toBe(10);
+      expect(swordsman.health).toBe(100);
+      expect(swordsman.level).toBe(1);
     });
+
+    test('Magician should have correct properties', () => {
+      const magician = new Magician('Merlin');
+      expect(magician.name).toBe('Merlin');
+      expect(magician.type).toBe('Magician');
+      expect(magician.attack).toBe(10);
+      expect(magician.defence).toBe(40);
+      expect(magician.health).toBe(100);
+      expect(magician.level).toBe(1);
+    });
+
+    test('Undead should have correct properties', () => {
+      const undead = new Undead('Dracula');
+      expect(undead.name).toBe('Dracula');
+      expect(undead.type).toBe('Undead');
+      expect(undead.attack).toBe(25);
+      expect(undead.defence).toBe(25);
+      expect(undead.health).toBe(100);
+      expect(undead.level).toBe(1);
+    });
+
+    test('Zombie should have correct properties', () => {
+      const zombie = new Zombie('Walker');
+      expect(zombie.name).toBe('Walker');
+      expect(zombie.type).toBe('Zombie');
+      expect(zombie.attack).toBe(40);
+      expect(zombie.defence).toBe(10);
+      expect(zombie.health).toBe(100);
+      expect(zombie.level).toBe(1);
+    });
+
+    test('Daemon should have correct properties', () => {
+      const daemon = new Daemon('Azazel');
+      expect(daemon.name).toBe('Azazel');
+      expect(daemon.type).toBe('Daemon');
+      expect(daemon.attack).toBe(10);
+      expect(daemon.defence).toBe(40);
+      expect(daemon.health).toBe(100);
+      expect(daemon.level).toBe(1);
+    });
+  });
 });
